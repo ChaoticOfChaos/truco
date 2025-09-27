@@ -1,3 +1,5 @@
+import time
+
 cards = {
     0: ["A-E", 8, "E"],
     1: ["2-E", 9, "E"],
@@ -75,8 +77,69 @@ class player:
 
         print("\n")
 
+    def ask_play_card(self) -> card:
+        for num, c in enumerate(self.mao):
+            print(f"({num}) -> {c.card}")
+
+        while True:
+            try:
+                index = int(input(">>> "))
+                carta = self.mao[index]
+                self.mao.remove(carta)
+                break
+            
+            except IndexError:
+                print("Insert a Valid Input")
+
+            except ValueError:
+                print("Insert a Number")
+
+        return carta
+    
+    def ask_action(self) -> int:
+        print("(1) -> Jogar Carta")
+        print("(2) -> Truco!")
+        print("(6) -> 6!")
+        print("(9) -> 9!")
+        print("(12) -> 12!")
+        print("(0) -> Pular Fora")
+
+        while True:
+            try:
+                inp = int(input(">>> "))
+                if (inp in [1, 2, 6, 9, 12, 0]):
+                    break
+
+            except ValueError:
+                print("Insert a Number")
+
+        return inp
+
+
 class jogo:
     def __init__(self, player1: player, player2: player, vira: card) -> None:
         self.player1 = player1
         self.player2 = player2
         self.vira = vira
+        self.value = 1
+
+    def play(self) -> None:
+        for i in range(3):
+            print(f"Rodada {i}")
+            time.sleep(1)
+            print("Vez do Player 1")
+            time.sleep(1)
+            carta_p1 = self.player1.ask_play_card()
+
+            print("Vez do Player 2")
+            time.sleep(1)
+            carta_p2 = self.player2.ask_play_card()
+
+            if (carta_p1.value > carta_p2.value):
+                print("Jogador 1 Ganhou!")
+
+            elif (carta_p1.value < carta_p2.value):
+                print("Jogador 2 Ganhou!")
+
+            else:
+                print("Empate!")

@@ -41,7 +41,7 @@ def main() -> None:
     game.player1.debug_card()
     game.player2.debug_card()
 
-    game.player1.self_display()
+    game.play()
 
 if __name__ == '__main__':
     main()
