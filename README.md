@@ -29,7 +29,7 @@ Mas na prática não muda muita coisa, foi apenas uma escolha para diferênciar 
 # Regras
 O baralho é embaralhado, é distribuido três cartas para cada e virada uma sobre a mesa. Aquela carta sobre a mesa é a manilha, ela representa a carta mais forte do jogo, mais forte que o 3. Essa é a única carta que sofre pelas regras dos naipes. Ficando algo como:<br>
 Ex:<br>
-Manilha: 6
+Manilha: 6<br>
 4, 5, 7, Q, J, K, A, 2, 3, 6-O, 6-E, 6-C, 6-P<br>
 No jogo original a carta virada não representa exatamente a manilha.<br>
 Caso a carta sobre a mesa seja um J, a manilha será K, mas no aqui até o momento caso a carta virada seja J, a manilha é J<br>
