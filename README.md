@@ -42,9 +42,15 @@ Caso ele pule fora o você ganha a quantidade de pontos do último truco. Caso v
 Ganha quem ganhar pelo menos 2. E ganha o Jogo quem fizer 12 pontos primeiro<br>
 Cada execução da aplicação é referente a uma rodada.<br>
 
+# Plataformas
+O jogo foi desenvolvido no Linux, funcionando normalmente caso instalado em um sistema Linux.<br>
+mas caso tente rodar em um sistema Windows, apenas uma pequena coisa deve ser mudada.<br>
+em algumas partes da função "play()" da classe "game" do arquivo "lib.py" existe a utilização da função "os.system("clear")" e "system("clear")" na função main do arquivo "truco.py" no qual o "clear" deve ser substituido por "cls", assim o jogo funciona normalmente nos sistemas Windows.<br>
+
 # Atualizações
 Mais para frente pretendo adicionar mais atualizações para o jogo.<br>
 Com uma das principais sendo possível jogar "online" localmente na mesma rede.<br>
+Outra Atualização, como dito no tópico anterior, o jogo foi desenvolvido em Linux, mais para frente pretendo disponibilizar oficialmente a versão para Windows<br>
 Não posso dar data de quando isso vai acontecer, já desenvolvo isso sozinho e trabalhar com esse tipo de conexão constuma bagunçar a cabeça.<br>
 
 # Extra
