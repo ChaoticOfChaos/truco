@@ -1,4 +1,5 @@
 import time
+import os
 
 cards = {
     0: ["A-E", 8, "E"],
@@ -61,6 +62,7 @@ class card:
 class player:
     def __init__(self, mao: list[card]) -> None:
         self.mao = mao
+        self.can_truco = True
 
     def display_hand(self) -> None:
         for c in self.mao:
@@ -96,24 +98,49 @@ class player:
 
         return carta
     
-    def ask_action(self) -> int:
-        print("(1) -> Jogar Carta")
-        print("(2) -> Truco!")
-        print("(6) -> 6!")
-        print("(9) -> 9!")
-        print("(12) -> 12!")
-        print("(0) -> Pular Fora")
+    def response_truco(self):
+        print("(1) -> Aceitar")
+        print(f"(2) -> Truco!")
+        print("(0) -> Pula Fora")
 
         while True:
             try:
                 inp = int(input(">>> "))
-                if (inp in [1, 2, 6, 9, 12, 0]):
+                if (inp in [1, 2, 0]):
                     break
 
             except ValueError:
                 print("Insert a Number")
 
         return inp
+    
+    def ask_action(self, can_truqued: bool) -> int:
+        print("(1) -> Jogar Carta")
+        if (self.can_truco and can_truqued):
+            print("(2) -> Truco!")
+        print("(0) -> Pular Fora")
+
+        while True:
+            try:
+                inp = int(input(">>> "))
+                if (self.can_truco and can_truqued):
+                    if (inp in [1, 2, 0]):
+                        break
+
+                else:
+                    if (inp in [1, 0]):
+                        break
+
+            except ValueError:
+                print("Insert a Number")
+
+        return inp
+    
+    def truqued(self) -> None:
+        self.can_truco = False
+
+    def can_truqued(self) -> None:
+        self.can_truco = True
 
 
 class jogo:
@@ -122,24 +149,116 @@ class jogo:
         self.player2 = player2
         self.vira = vira
         self.value = 1
+        self.trucos = 0
+        self.dict_trucos = {0: 1, 1: 3, 2: 6, 3: 9, 4: 12}
+        self.can_truco = True
+        self.pular_fora_dict = {0: 1, 1: 1, 2: 3, 3: 6, 4: 9}
+        self.p1_v = 0
+        self.p2_v = 0
 
     def play(self) -> None:
         for i in range(3):
-            print(f"Rodada {i}")
+            print(f"Rodada {i+1}")
+            print(f"Valor da Partida: {self.value}")
+            print(f"Manilha: {self.vira.card}")
+            print(f"Suas Vitórias: {self.p1_v}")
             time.sleep(1)
             print("Vez do Player 1")
             time.sleep(1)
-            carta_p1 = self.player1.ask_play_card()
+            self.player1.self_display()
+            action_p1 = self.player1.ask_action(self.can_truco)
+            
+            # Player 1 Aumenta Valor
+            if (action_p1 == 2):
+                self.player1.truqued()
+                self.player2.can_truqued()
+                self.trucos += 1
+                self.value = self.dict_trucos[self.trucos]
+                if (self.value == 12):
+                    self.can_truco = False
+                
 
+            # Player 1 Pula Fora
+            elif (action_p1 == 0):
+                print("Jogador 1 Pulou Fora!")
+                print("Vitória do Jogador 2")
+                print(f"Jogador 2 +{self.pular_fora_dict[self.trucos]}")
+                return None
+            
+            elif (action_p1 == 1):
+                pass
+
+            else:
+                print("ERROR!")
+                return None
+
+            carta_p1 = self.player1.ask_play_card()
+            time.sleep(0.7)
+            os.system("clear")
             print("Vez do Player 2")
+            time.sleep(5)
+            os.system("clear")
+
+
+            print(f"Rodada: {i+1}")
+            print(f"Valor da Partida: {self.value}")
+            print(f"Manilha: {self.vira.card}")
+            print(f"Suas Vitórias: {self.p2_v}")
             time.sleep(1)
+            self.player2.self_display()
+            action_p2 = self.player2.ask_action(self.can_truco)
+
+            # Player 2 Aumenta Valor
+            if (action_p2 == 2):
+                self.player1.can_truqued()
+                self.player2.truqued()
+                self.trucos += 1
+                self.value = self.dict_trucos[self.trucos]
+                if (self.value == 12):
+                    self.can_truco = False
+
+            # Player 2 Pula Fora 
+            elif (action_p2 == 0):
+                print("Jogador 2 Pulou Fora")
+                print("Vitória do Jogador 1")
+                print(f"Jogador 1 +{self.pular_fora_dict[self.trucos]}")
+                return None
+            
+            elif (action_p2 == 1):
+                pass
+
+            else:
+                print("ERROR!")
+                return None
+
             carta_p2 = self.player2.ask_play_card()
 
             if (carta_p1.value > carta_p2.value):
                 print("Jogador 1 Ganhou!")
+                self.p1_v += 1
 
             elif (carta_p1.value < carta_p2.value):
                 print("Jogador 2 Ganhou!")
+                self.p2_v += 1
 
             else:
                 print("Empate!")
+
+            time.sleep(0.7)
+            os.system("clear")
+            print("Vez do Player 1")
+            time.sleep(5)
+            os.system("clear")
+
+        # Fim do Jogo
+
+        if (self.p1_v > self.p2_v):
+            print("Jogador 1 Ganhou")
+            print(f"Jogador 1 +{self.value}")
+        
+        elif (self.p1_v < self.p2_v):
+            print("Jogador 2 Ganhou")
+            print(f"Jogador 2 +{self.value}")
+
+        else:
+            print("Empate")

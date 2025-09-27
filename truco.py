@@ -1,6 +1,6 @@
 import random
 import lib
-import time
+from os import system
 
 def shuffle() -> tuple[list, list, list]:
     mao1 = []
@@ -31,6 +31,7 @@ def shuffle() -> tuple[list, list, list]:
     return (mao1, mao2, [vira])
 
 def main() -> None:
+    system("clear")
     (mao1, mao2, vira) = shuffle()
     player1 = lib.player(mao1)
     player2 = lib.player(mao2)
