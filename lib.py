@@ -75,7 +75,7 @@ class player:
     def self_display(self) -> None:
         print("Suas Cartas:")
         for c in self.mao:
-            print(f"{c.card}", end=" ")
+            print(f"|{c.card}|", end=" ")
 
         print("\n")
 
@@ -155,15 +155,19 @@ class jogo:
         self.pular_fora_dict = {0: 1, 1: 1, 2: 3, 3: 6, 4: 9}
         self.p1_v = 0
         self.p2_v = 0
+        self.mesa = []
 
     def play(self) -> None:
         for i in range(3):
+            print("Jogador 1")
             print(f"Rodada {i+1}")
             print(f"Valor da Partida: {self.value}")
             print(f"Manilha: {self.vira.card}")
+            print("Mesa:", end=" ")
+            for c in self.mesa:
+                print(f"|{c}|", end=" ")
+            print("")
             print(f"Suas Vitórias: {self.p1_v}")
-            time.sleep(1)
-            print("Vez do Player 1")
             time.sleep(1)
             self.player1.self_display()
             action_p1 = self.player1.ask_action(self.can_truco)
@@ -193,16 +197,21 @@ class jogo:
                 return None
 
             carta_p1 = self.player1.ask_play_card()
+            self.mesa.append(carta_p1.card)
             time.sleep(0.7)
             os.system("clear")
             print("Vez do Player 2")
             time.sleep(5)
             os.system("clear")
 
-
+            print("Jogador 2")
             print(f"Rodada: {i+1}")
             print(f"Valor da Partida: {self.value}")
             print(f"Manilha: {self.vira.card}")
+            print("Mesa:", end=" ")
+            for c in self.mesa:
+                print(f"|{c}|", end=" ")
+            print("")
             print(f"Suas Vitórias: {self.p2_v}")
             time.sleep(1)
             self.player2.self_display()
@@ -232,6 +241,7 @@ class jogo:
                 return None
 
             carta_p2 = self.player2.ask_play_card()
+            self.mesa.append(carta_p2.card)
 
             if (carta_p1.value > carta_p2.value):
                 print("Jogador 1 Ganhou!")

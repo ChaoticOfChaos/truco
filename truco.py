@@ -15,7 +15,6 @@ def shuffle() -> tuple[list, list, list]:
 
         if card1.value == vira.value:
             card1.value += lib.lib_add[card1.naipe]
-            print(f"Manilha! : {card1.card} ; {card1.value} ; {card1.naipe}")
 
         mao1.append(card1)
 
@@ -24,7 +23,6 @@ def shuffle() -> tuple[list, list, list]:
 
         if card2.value == vira.value:
             card2.value += lib.lib_add[card2.naipe]
-            print(f"Manilha! : {card2.card} ; {card2.value} ; {card2.naipe}")
 
         mao2.append(card2)
 
@@ -37,10 +35,6 @@ def main() -> None:
     player2 = lib.player(mao2)
 
     game = lib.jogo(player1, player2, vira[0])
-
-    print(f"Manilha : {game.vira.card}")
-    game.player1.debug_card()
-    game.player2.debug_card()
 
     game.play()
 

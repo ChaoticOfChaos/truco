@@ -45,7 +45,7 @@ Cada execução da aplicação é referente a uma rodada.<br>
 # Plataformas
 O jogo foi desenvolvido no Linux, funcionando normalmente caso instalado em um sistema Linux.<br>
 mas caso tente rodar em um sistema Windows, apenas uma pequena coisa deve ser mudada.<br>
-em algumas partes da função "play()" da classe "game" do arquivo "lib.py" existe a utilização da função "os.system("clear")" e "system("clear")" na função main do arquivo "truco.py" no qual o "clear" deve ser substituido por "cls", assim o jogo funciona normalmente nos sistemas Windows.<br>
+em algumas partes da função "play()" da classe "jogo" do arquivo "lib.py" existe a utilização da função "os.system("clear")" e "system("clear")" na função main do arquivo "truco.py" no qual o "clear" deve ser substituido por "cls", assim o jogo funciona normalmente nos sistemas Windows.<br>
 
 # Atualizações
 Mais para frente pretendo adicionar mais atualizações para o jogo.<br>
