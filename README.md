@@ -1,5 +1,5 @@
 # TRUCO CLI
-## Version 2.0.0
+## Version 2.0.1
 
 # Como Jogar
 O jogador 1 deve usar o comando:<br>

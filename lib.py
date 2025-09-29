@@ -162,6 +162,7 @@ class jogo:
         server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server.bind((host, port))
         server.listen(1)
+        print(f"Escutando em: {host}:{port}")
         conexao, endereco = server.accept()
         print(endereco)
         for i in range(3):
