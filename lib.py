@@ -1,5 +1,6 @@
 import time
 import os
+import socket
 
 cards = {
     0: ["A-E", 8, "E"],
@@ -157,8 +158,14 @@ class jogo:
         self.p2_v = 0
         self.mesa = []
 
-    def play(self) -> None:
+    def play(self, host: str, port: int) -> None:
+        server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        server.bind((host, port))
+        server.listen(1)
+        conexao, endereco = server.accept()
+        print(endereco)
         for i in range(3):
+            os.system("clear")
             print("Jogador 1")
             print(f"Rodada {i+1}")
             print(f"Valor da Partida: {self.value}")
@@ -168,7 +175,6 @@ class jogo:
                 print(f"|{c}|", end=" ")
             print("")
             print(f"Suas Vitórias: {self.p1_v}")
-            time.sleep(1)
             self.player1.self_display()
             action_p1 = self.player1.ask_action(self.can_truco)
             
@@ -198,24 +204,27 @@ class jogo:
 
             carta_p1 = self.player1.ask_play_card()
             self.mesa.append(carta_p1.card)
-            time.sleep(0.7)
             os.system("clear")
-            print("Vez do Player 2")
-            time.sleep(5)
-            os.system("clear")
+            print("Vez do Jogador 2")
 
-            print("Jogador 2")
-            print(f"Rodada: {i+1}")
-            print(f"Valor da Partida: {self.value}")
-            print(f"Manilha: {self.vira.card}")
-            print("Mesa:", end=" ")
+            # Enviar "Can_truco" do P2
+            conexao.send(f"{self.player2.can_truco}".encode())
+            time.sleep(0.7)
+            # Enviar "Can_truqued" da Mesa
+            conexao.send(f"{self.can_truco}".encode())
+            time.sleep(0.7)
+
+            msg_p2 = f"Jogador 2\nRodada: {i+1}\nValor da Partida: {self.value}\nManilha: {self.vira.card}\nMesa:"
             for c in self.mesa:
-                print(f"|{c}|", end=" ")
-            print("")
-            print(f"Suas Vitórias: {self.p2_v}")
-            time.sleep(1)
-            self.player2.self_display()
-            action_p2 = self.player2.ask_action(self.can_truco)
+                msg_p2 += f"|{c}| "
+            msg_p2 += f"\nSuas Vitórias: {self.p2_v}\nSuas Cartas:"
+
+            for c in self.player2.mao:
+                msg_p2 += f"|{c.card}| "
+            conexao.send(msg_p2.encode())
+            time.sleep(0.7)
+            # action_p2 = self.player2.ask_action(self.can_truco)
+            action_p2 = int(conexao.recv(1024).decode())
 
             # Player 2 Aumenta Valor
             if (action_p2 == 2):
@@ -240,7 +249,24 @@ class jogo:
                 print("ERROR!")
                 return None
 
-            carta_p2 = self.player2.ask_play_card()
+            cartas = ""
+            for c in self.player2.mao:
+                if (len(self.player2.mao) == 1):
+                    cartas += f"{c.card}"
+
+                else:
+                    cartas += f"{c.card};"
+
+            if (cartas[-1] == ';'):
+                cartas = cartas[:-1]
+
+            conexao.send(cartas.encode())
+            time.sleep(0.7)
+
+            # Sempre será um int
+            index_carta = int(conexao.recv(1024).decode())
+            carta_p2 = self.player2.mao[index_carta]
+            self.player2.mao.remove(carta_p2)
             self.mesa.append(carta_p2.card)
 
             if (carta_p1.value > carta_p2.value):
@@ -254,11 +280,7 @@ class jogo:
             else:
                 print("Empate!")
 
-            time.sleep(0.7)
-            os.system("clear")
-            print("Vez do Player 1")
-            time.sleep(5)
-            os.system("clear")
+            conexao.send("0".encode())
 
         # Fim do Jogo
 

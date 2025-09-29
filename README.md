@@ -1,9 +1,17 @@
 # TRUCO CLI
-## Version 1.0.0
+## Version 2.0.0
 
 # Como Jogar
-Atualmente na versão 1.0.0 apenas é possível jogar localmente.<br>
-Mas para contornar esse problema, foi adicionado um delay para impedir que algum dos jogadores veja as cartas do outro.<br>
+O jogador 1 deve usar o comando:<br>
+```sh
+python3 truco.py host 127.0.0.1 12345
+```
+Substituindo o Endereço '127.0.0.1' pelo endereço de IP Privado e a porta pela qual preferir<br>
+Já o jogador 2 Deve se Conectar usando:
+```sh
+python3 truco.py client 127.0.0.1 12345
+```
+Substituindo o endereço '127.0.0.1' pelo IP do Jogador 1 a porta pela porta escolhida pelo Jogador 1<br>
 O Jogo funciona semenlhante ao jogo original:<br>
 3<br>
 2<br>
@@ -49,10 +57,15 @@ em algumas partes da função "play()" da classe "jogo" do arquivo "lib.py" exis
 
 # Atualizações
 Mais para frente pretendo adicionar mais atualizações para o jogo.<br>
-Com uma das principais sendo possível jogar "online" localmente na mesma rede.<br>
-Outra Atualização, como dito no tópico anterior, o jogo foi desenvolvido em Linux, mais para frente pretendo disponibilizar oficialmente a versão para Windows<br>
-Não posso dar data de quando isso vai acontecer, já desenvolvo isso sozinho e trabalhar com esse tipo de conexão constuma bagunçar a cabeça.<br>
+Outra Atualização, como dito no tópico anterior, o jogo foi desenvolvido em Linux, mais para frente pretendo disponibilizar oficialmente a versão para Windows.<br>
+Outra atualização é tanto disponilizar em outro Branch a versão "legacy" aonde se joga localmente.<br>
+E também em outro Branch uma versão com Bot para jogar sozinho.<br>
+Não posso dar data de quando isso vai acontecer, já desenvolvo isso sozinho.<br>
+Mas Acho Que Seja Breve ;)<br>
+
+# Issue
+Algo que possa irritar alguns é o fato de algumas mensagens principalmente de vitória e pontuação apenas aparece para o Jogador 1, Pretendo em breve corrigir isso<br>
 
 # Extra
 Caso você tenha olhado o código fonte, muito provavelmente percebeu que os nomes das variáveis são uma mistrura de português, inglês e "portugles" isso é apenas uma piada com o fato de estar misturando programação e jogo de buteco, assim misturando palavras em inglês e português.<br>
-
+Existe uma "Sujeirinha" de programação escondida no código que é um protótipo da correção do erro de mensagens do tópico anterior. Não quis remover tanto por "Easter Egg", Quanto para ter parte da solução, quanto por preguiça.<br>
