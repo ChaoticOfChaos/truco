@@ -194,6 +194,7 @@ class jogo:
                 print("Jogador 1 Pulou Fora!")
                 print("Vitória do Jogador 2")
                 print(f"Jogador 2 +{self.pular_fora_dict[self.trucos]}")
+                conexao.close()
                 return None
             
             elif (action_p1 == 1):
@@ -201,6 +202,7 @@ class jogo:
 
             else:
                 print("ERROR!")
+                conexao.close()
                 return None
 
             carta_p1 = self.player1.ask_play_card()
@@ -241,6 +243,7 @@ class jogo:
                 print("Jogador 2 Pulou Fora")
                 print("Vitória do Jogador 1")
                 print(f"Jogador 1 +{self.pular_fora_dict[self.trucos]}")
+                conexao.close()
                 return None
             
             elif (action_p2 == 1):
@@ -248,6 +251,7 @@ class jogo:
 
             else:
                 print("ERROR!")
+                conexao.close()
                 return None
 
             cartas = ""
@@ -295,3 +299,5 @@ class jogo:
 
         else:
             print("Empate")
+
+        conexao.close()

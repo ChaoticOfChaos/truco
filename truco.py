@@ -50,9 +50,9 @@ def connection(host: str, port: int) -> None:
     for _ in range(3):
         os.system("clear")
         # Se o Jogador Pode Trucar
-        can_truco = bool(client.recv(1024).decode())
+        can_truco = True if client.recv(1024).decode() == "True" else False
         # se a Mesa Pode Trucar
-        can_truqued = bool(client.recv(1024).decode())
+        can_truqued = True if client.recv(1024).decode() == "True" else False
         # Ambos a Resposta Apenas pode Ser True ou False
         
 
@@ -98,6 +98,7 @@ def connection(host: str, port: int) -> None:
 
         else:
             print("ERROR!")
+            client.close()
             return None
 
         # Receber o último Valor
@@ -106,6 +107,8 @@ def connection(host: str, port: int) -> None:
         # 2 -> Vitória do Jogador 1
         # 3 -> Vitória do Jogador 2
         # 4 -> Empate
+
+    client.close()
 
 def shuffle() -> tuple[list, list, list]:
     mao1 = []
